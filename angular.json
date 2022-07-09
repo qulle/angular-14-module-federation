@@ -1,0 +1,325 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "shell-app": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "root": "projects/shell-app",
+            "sourceRoot": "projects/shell-app/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/shell-app",
+                        "index": "projects/shell-app/src/index.html",
+                        "main": "projects/shell-app/src/main.ts",
+                        "polyfills": "projects/shell-app/src/polyfills.ts",
+                        "tsConfig": "projects/shell-app/tsconfig.app.json",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            "projects/shell-app/src/favicon.ico",
+                            "projects/shell-app/src/assets"
+                        ],
+                        "styles": ["projects/shell-app/src/styles.scss"],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "500kb",
+                                    "maximumError": "1mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "2kb",
+                                    "maximumError": "4kb"
+                                }
+                            ],
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/shell-app/src/environments/environment.ts",
+                                    "with": "projects/shell-app/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "outputHashing": "all"
+                        },
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        }
+                    },
+                    "defaultConfiguration": "production"
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "shell-app:build:production"
+                        },
+                        "development": {
+                            "browserTarget": "shell-app:build:development"
+                        }
+                    },
+                    "defaultConfiguration": "development"
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "shell-app:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/shell-app/src/test.ts",
+                        "polyfills": "projects/shell-app/src/polyfills.ts",
+                        "tsConfig": "projects/shell-app/tsconfig.spec.json",
+                        "karmaConfig": "projects/shell-app/karma.conf.js",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            "projects/shell-app/src/favicon.ico",
+                            "projects/shell-app/src/assets"
+                        ],
+                        "styles": ["projects/shell-app/src/styles.scss"],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "projects/shell-app/src/**/*.ts",
+                            "projects/shell-app/src/**/*.html"
+                        ]
+                    }
+                }
+            }
+        },
+        "mf-header": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "root": "projects/mf-header",
+            "sourceRoot": "projects/mf-header/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/mf-header",
+                        "index": "projects/mf-header/src/index.html",
+                        "main": "projects/mf-header/src/main.ts",
+                        "polyfills": "projects/mf-header/src/polyfills.ts",
+                        "tsConfig": "projects/mf-header/tsconfig.app.json",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            "projects/mf-header/src/favicon.ico",
+                            "projects/mf-header/src/assets"
+                        ],
+                        "styles": ["projects/mf-header/src/styles.scss"],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "500kb",
+                                    "maximumError": "1mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "2kb",
+                                    "maximumError": "4kb"
+                                }
+                            ],
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/mf-header/src/environments/environment.ts",
+                                    "with": "projects/mf-header/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "outputHashing": "all"
+                        },
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        }
+                    },
+                    "defaultConfiguration": "production"
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "mf-header:build:production"
+                        },
+                        "development": {
+                            "browserTarget": "mf-header:build:development"
+                        }
+                    },
+                    "defaultConfiguration": "development"
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "mf-header:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/mf-header/src/test.ts",
+                        "polyfills": "projects/mf-header/src/polyfills.ts",
+                        "tsConfig": "projects/mf-header/tsconfig.spec.json",
+                        "karmaConfig": "projects/mf-header/karma.conf.js",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            "projects/mf-header/src/favicon.ico",
+                            "projects/mf-header/src/assets"
+                        ],
+                        "styles": ["projects/mf-header/src/styles.scss"],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "projects/mf-header/src/**/*.ts",
+                            "projects/mf-header/src/**/*.html"
+                        ]
+                    }
+                }
+            }
+        },
+        "mf-movies": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "root": "projects/mf-movies",
+            "sourceRoot": "projects/mf-movies/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/mf-movies",
+                        "index": "projects/mf-movies/src/index.html",
+                        "main": "projects/mf-movies/src/main.ts",
+                        "polyfills": "projects/mf-movies/src/polyfills.ts",
+                        "tsConfig": "projects/mf-movies/tsconfig.app.json",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            "projects/mf-movies/src/favicon.ico",
+                            "projects/mf-movies/src/assets"
+                        ],
+                        "styles": ["projects/mf-movies/src/styles.scss"],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "500kb",
+                                    "maximumError": "1mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "2kb",
+                                    "maximumError": "4kb"
+                                }
+                            ],
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/mf-movies/src/environments/environment.ts",
+                                    "with": "projects/mf-movies/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "outputHashing": "all"
+                        },
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        }
+                    },
+                    "defaultConfiguration": "production"
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "mf-movies:build:production"
+                        },
+                        "development": {
+                            "browserTarget": "mf-movies:build:development"
+                        }
+                    },
+                    "defaultConfiguration": "development"
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "mf-movies:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/mf-movies/src/test.ts",
+                        "polyfills": "projects/mf-movies/src/polyfills.ts",
+                        "tsConfig": "projects/mf-movies/tsconfig.spec.json",
+                        "karmaConfig": "projects/mf-movies/karma.conf.js",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            "projects/mf-movies/src/favicon.ico",
+                            "projects/mf-movies/src/assets"
+                        ],
+                        "styles": ["projects/mf-movies/src/styles.scss"],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "projects/mf-movies/src/**/*.ts",
+                            "projects/mf-movies/src/**/*.html"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "cli": {
+        "schematicCollections": ["@angular-eslint/schematics"]
+    }
+}
