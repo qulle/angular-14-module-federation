@@ -2,7 +2,7 @@
 
 ## About
 
-The purpose of this project is to document the installation, configuration and integration process of the following concepts. How to:
+The purpose of this project is to document the installation, configuration and integration process of the following concepts.
 
 ### 1. [Multiple Apps in Workspace](#1-multiple-angular-apps-in-workspace)
 
@@ -10,15 +10,17 @@ The purpose of this project is to document the installation, configuration and i
 
 ### 3. [Micro Frontends - Module Federation](#3-micro-frontends-module-federation)
 
-**Note:** Normally i would have each project in the there own Git-repo. To compress this example into one project here on github, I have baked everything together in a monorepo, which in some project forms has its advantages. This have caused some manuall steps that are not required when having one project per Git-repo.
+**Note:** Normally i would have each project in there own Git-repo. To compress this example into one project here on github, I have baked everything together in a monorepo, which in some project forms has its advantages. This have caused some manuall steps that are not required when having one project per Git-repo.
 
-**Note:** IMHO - many build systems require much ocnfigration and a careful hand to maintain them. From my experience it's easu to tip over the edge where getting too technical only causes problems between different version of Angular, plugins and third-partuy libraries. Keep it simple. In this setup we will use `ESLint`, `Prettier` and `Husky` to run pre-commit and pre-push hooks to lint, format and test the code.
+**Note:** IMHO - many build systems require much ocnfigration and a careful hand to maintain them. From my experience it's easy to tip over the edge where getting too technical only causes problems between different version of Angular, plugins and third-partuy libraries. Keep it simple. In this setup we will use `ESLint`, `Prettier` and `Husky` to run pre-commit and pre-push hooks to lint, format and test the code.
 
 ## 1. Multiple Angular Apps in Workspace
 
 Chapter describing the process of setting up multiple projects in the same workspace using the same Git-repo.
 
 ### 1.1. Created Empty Workspace
+
+_I had cloned an empty repo from GitHub, thats why i used the directory switch set to the current directory._
 
 ```
 $ ng new ModuleFederation --create-application="false" --directory ./
@@ -30,14 +32,7 @@ $ ng new ModuleFederation --create-application="false" --directory ./
 $ ng generate application shell-app --style=scss --routing=true
 ```
 
-Two ways of running the shell-app.
-
-```
-$ ng serve shell-app
-$ ng server --project="shell-app"
-```
-
-### 1.3. Add Micron Frontend Applications
+### 1.3. Add Micro Frontend Applications
 
 Add one or many applications that are used as Micro Frontends.
 
@@ -53,9 +48,18 @@ Second Micro Frontend.
 $ ng generate application mf-movies --style=scss --routing=true
 ```
 
-### 1.4. Building applications
+### 1.4. Serving applications
 
-To build applications for productions use the following commands.
+Two ways of serving the applications.
+
+```
+$ ng serve <project-name>
+$ ng server --project="<project-name>"
+```
+
+### 1.5. Building applications
+
+To build applications for production use the following commands.
 
 ```
 $ ng build --prod --project="shell-app"
@@ -75,7 +79,7 @@ This chapter is all about making the code more maintainable, readable, consisten
 $ ng add @angular-eslint/schematics
 ```
 
-The ESLint configuration is now done thanks to the `ng add` command that sets up all necessary config files. The following command can be run to check for linting errors.
+The ESLint configuration is now done thanks to the `ng add` command that sets up all necessary config files (_Not true because of monorepo, keep on reading_). The following command can be run to check for linting errors.
 
 ```
 $ ng lint
@@ -97,7 +101,7 @@ $ touch .eslintrc.json
 
 Add the following config to the `.eslintrc.json` file.
 
-```json
+```jsonc
 {
     "root": true,
     "overrides": [
@@ -143,10 +147,13 @@ Add the following config to the `.eslintrc.json` file.
 
 For all projects in the `angular.json` file append a `lint section` with that project name.
 
-```json
+```jsonc
     // ...
     // other project-config
     // ...
+    "test": {
+        //......
+    },
     "lint": {
         "builder": "@angular-eslint/builder:lint",
         "options": {
@@ -176,7 +183,7 @@ $ touch .prettierrc.json
 
 Add the following config to the `.prettierrc.json` file.
 
-```json
+```jsonc
 {
     "tabWidth": 4,
     "useTabs": false,
@@ -208,9 +215,11 @@ The Prettier-configuration is now done. The following command can be run to form
 $ npx prettier --write .
 ```
 
+**Note:** Two npm aliases for Prettier will be set up in the next Husky section.
+
 ### 2.3 Install Husky
 
-**Why:** Husky makes working with Git Hooks easier. The pre-commit-hook will make shure that both linting and formatting have been done before a commit is allowed to be made. The pre-push-hook will run tests before the code can be pushed to remote.
+**Why:** Husky makes working with Git Hooks easier. The pre-commit-hook will make shure that both formatting and linting have been done before a commit is allowed to be made. The pre-push-hook will run tests before the code can be pushed to remote.
 
 **Note:** The hooks are meant to be helpful in preventing mistakes or forgotten code. You should still be able to push unfinished code to remote when working on a feature branch with others.
 
@@ -220,7 +229,7 @@ $ npm install husky --save-dev
 
 Add new scripts to the script section in the `package.json` file.
 
-```json
+```jsonc
 {
     // ...
     // other package.json config
@@ -229,9 +238,10 @@ Add new scripts to the script section in the `package.json` file.
         // ...
         // other npm-scripts
         // ...
-        "prettier": "npx prettier --write .",
-        "pre-commit": "npm run lint && npm run prettier",
-        "pre-push": "npm run test",
+        "prettier-write": "npx prettier --write .",
+        "prettier-check": "npx prettier --check .",
+        "pre-commit": "npm run prettier-check && npm run lint",
+        "pre-push": "echo TODO pre-push",
         "configure-husky": "npx husky install && npx husky add .husky/pre-commit \"npm run pre-commit\" && npx husky add .husky/pre-push \"npm run pre-push\""
     }
 }
@@ -243,6 +253,17 @@ Run the configure-husky script. This will make shure that Husky is installed and
 $ npm run configure-husky
 ```
 
-Thats it! Everything is now configured. When a commit is made `$ git commit -m "My changes"` both linting using ESLint and code formatting using Prettier will be applied to the project.
+Thats it! Everything is now configured. When a commit is made `$ git commit -m "My changes"` both code formatting using Prettier and linting using ESLint will be applied to the project.
+
+### 2.4 The Workflow
+
+Now thats everything regarding formatting and linting is done. Here is a step-by-step checklist.
+
+1. Write your code
+2. Stage files to be commited `$ git add .`
+3. Commit files `$ git commit -m "My changes"`
+4. Pre-Commit hook runs `prettier-check` and `ng lint`
+
+If any errors are found, the commit is aborted. You now need to fix them manually or via the `$ ng lint --fix` command. Also run formatting on the files `$ npm run prettier-write`.
 
 ## 3. Micro Frontends Module Federation
